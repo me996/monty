@@ -81,12 +81,13 @@ current = tmp;
 }
 
 /**
- * clean_exit - frees dynamic allocated memory
- */
+* clean_exit - frees all dynamic allocated memory
+*/
 
 void clean_exit(void)
 {
 free_list();
+free(glb.line);
 fclose(glb.f);
 exit(EXIT_FAILURE);
 }

@@ -1,8 +1,7 @@
 #ifndef MONTY_H
 #define MONTY_H
 
-
-#define MAX_LINE_LENGTH 100
+#define _GNU_SOURCE
 
 #include <stdio.h> /*FILE*/
 #include <stdlib.h> /*exit(Macros)*/
@@ -25,6 +24,7 @@ struct stack_s *prev;
 struct stack_s *next;
 } stack_t;
 
+/*extern stack_t *head;*/
 
 /**
  * struct instruction_s - opcode and its function
@@ -34,25 +34,18 @@ struct stack_s *next;
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO
  */
-
 typedef struct instruction_s
 {
 char *opcode;
 void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-/**
- * struct glob - declare global variables
- * @f: pointer to file
- * @head: pointer to head node
- *
- * Description: global variable struct
- * for stack, queues, LIFO, FIFO
- */
+
 
 typedef struct glob
 {
 FILE *f;
+char *line;
 stack_t *head;
 } glob;
 

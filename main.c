@@ -1,7 +1,7 @@
 #include "monty.h"
+/*stack_t *head = NULL;*/
 
-
-glob glb = {NULL, NULL};
+glob glb = {NULL, NULL, NULL};
 
 
 /**
@@ -38,19 +38,21 @@ return (0);
 
 void readFile(FILE *f)
 {
-char line[MAX_LINE_LENGTH] = {'\0'};
+
 int isStake = 1;
 unsigned int line_number = 0;
-
+char *line = NULL;
+size_t line_len = 0;
 
 /*read every single line from file f*/
-while (fgets(line, MAX_LINE_LENGTH, f))
+while (getline(&line, &line_len, f) > -1)
 { /* refine the line*/
+glb.line = line;
 line_number++;
 opcode_extractor(line, line_number, &isStake);
 }
 
-
+free(line);
 free_list();
 }
 
@@ -104,6 +106,7 @@ return;
  * handle_push - handles push opcode
  * @push_arg: argument to push
  * @line_number: line number
+ * @line: line to extract opcode from
  * @isStake: pointer to integer indicating whether stack or queue is used
  */
 
@@ -134,6 +137,7 @@ return;
  * push_arg_number - converts push argument to number
  * @push_arg: argument to push
  * @line_number: line number
+ * @line: line to extract opcode from
  * Return: number
  */
 

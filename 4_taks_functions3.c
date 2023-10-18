@@ -53,7 +53,7 @@ printf("%c\n", n);
 }
 
 /**
- * pstr - prints all the nodes on the stack, upon ascii
+ * pstr - prints all the nodes on the stack
  * @stack: a pointer to the head of the stack
  * @line_number: the line number of the opcode
  * Return: none
