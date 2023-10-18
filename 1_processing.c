@@ -33,6 +33,9 @@ int i;
 instruction_t opcode_func[] = {
 {"pall", pall},
 {"pint", pint},
+{"pop", pop},
+{"swap", swap},
+{"add", add},
 {NULL, NULL}
 };
 

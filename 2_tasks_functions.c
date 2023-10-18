@@ -94,3 +94,35 @@ clean_exit();
 }
 printf("%d\n", (*stack)->n);
 }
+
+/**
+ * pop - removes the top node from the stack
+ * @stack: a pointer to the head of the stack
+ * @line_number: the line number of the opcode
+ * Return: none
+ */
+
+void pop(stack_t **stack, unsigned int line_number)
+{
+stack_t *tmp;
+
+if (!*stack)
+{
+fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+clean_exit();
+}
+
+
+tmp = (*stack);
+if ((*stack)->next) /*if more than 1 node*/
+{
+(*stack) = (*stack)->next;
+(*stack)->prev = NULL;
+free(tmp);
+}
+else /*just 1 node*/
+{
+free(tmp);
+(*stack) = NULL;
+}
+}

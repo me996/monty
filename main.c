@@ -71,6 +71,8 @@ if (!opcode) /* for empty line*/
 return;
 }
 
+if (strcmp(opcode, "nop") == 0)
+return;
 if (strcmp(opcode, "stack") == 0)
 {
 *isStake = 1;
