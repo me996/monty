@@ -24,7 +24,7 @@ struct stack_s *prev;
 struct stack_s *next;
 } stack_t;
 
-/*extern stack_t *head;*/
+extern stack_t *head;
 
 /**
  * struct instruction_s - opcode and its function
@@ -41,34 +41,18 @@ void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 
-
-typedef struct glob
-{
-FILE *f;
-char *line;
-stack_t *head;
-} glob;
-
-extern glob glb;
-
-
-
-
-
-
 /* functions declaraction: */
 
 /* processing the raw file content file:   main.c*/
 void readFile(FILE *f);
 void opcode_extractor(char *line, unsigned int line_number, int *isStake);
-void handle_push(char *push_arg, unsigned int line_number, int *isStake);
-int push_arg_number(char *push_arg, unsigned int line_number);
+void handle_push(char *push_arg, unsigned int line_number, char *line, int *isStake);
+int push_arg_number(char *push_arg, unsigned int line_number, char *line);
 
 /* processing the raw file content file: 1_processisng.c*/
-stack_t *pre_push_node(int n);
-void func_executor(char *opcode, unsigned int line_number);
+stack_t *pre_push_node(int n, char *line);
+void func_executor(char *opcode, unsigned int line_number, char *line);
 void free_list(void);
-void clean_exit(void);
 
 
 

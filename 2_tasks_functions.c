@@ -13,13 +13,13 @@ stack_t *current;
 current = *stack;
 (void) line_number;
 
-if (glb.head == NULL) /*no nodes found in the list*/
-glb.head = current;
+if (head == NULL) /*no nodes found in the list*/
+head = current;
 else  /* there are nodes in the list*/
 {
-current->next = glb.head;
-glb.head->prev = current;
-glb.head = current;
+current->next = head;
+head->prev = current;
+head = current;
 }
 }
 
@@ -34,11 +34,11 @@ void push_queue(stack_t **stack, unsigned int line_number)
 {
 stack_t *current, *tmp;
 current = *stack;
-tmp = glb.head;
+tmp = head;
 (void) line_number;
 
-if (glb.head == NULL) /*no nodes found in the list*/
-glb.head = current;
+if (head == NULL) /*no nodes found in the list*/
+head = current;
 else  /* there are nodes in the list*/
 {
 while (tmp->next) /*capture last node at list*/
@@ -88,7 +88,9 @@ void pint(stack_t **stack, unsigned int line_number)
 if (!*stack)
 {
 fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 printf("%d\n", (*stack)->n);
 }
@@ -107,7 +109,9 @@ stack_t *tmp;
 if (!*stack)
 {
 fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 
 

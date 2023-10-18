@@ -14,14 +14,17 @@ stack_t *second, *tmp;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't mod, stack too short\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 tmp = (*stack); /* save head address*/
 second = (*stack)->next; /*get 2nd node address*/
 if ((*stack)->n == 0)
 {
 fprintf(stderr, "L%d: division by zero\n", line_number);
-clean_exit();
+free_list();
+exit(EXIT_FAILURE);
 }
 second->n = second->n % (*stack)->n;
 (*stack) = second;
@@ -41,13 +44,15 @@ int n;
 if (!(*stack))
 {
 fprintf(stderr, "L%d: can't pchar, stack empty\n", line_number);
-clean_exit();
+free_list();
+exit(EXIT_FAILURE);
 }
 n = (*stack)->n;
 if (n < 0 || n > 127)
 {
 fprintf(stderr, "L%d: can't pchar, value out of range\n", line_number);
-clean_exit();
+free_list();
+exit(EXIT_FAILURE);
 }
 printf("%c\n", n);
 }

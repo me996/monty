@@ -14,7 +14,9 @@ stack_t *first,  *second, *tmp;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 /*getting the address of first 2 nodes*/
 first = (*stack);
@@ -48,7 +50,9 @@ stack_t *second, *tmp;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 tmp = (*stack); /* save head address*/
 second = (*stack)->next; /*get 2nd node address*/
@@ -72,7 +76,9 @@ stack_t *second, *tmp;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 tmp = (*stack); /* save head address*/
 second = (*stack)->next; /*get 2nd node address*/
@@ -95,14 +101,18 @@ stack_t *second, *tmp;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't div, stack too short\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 tmp = (*stack); /* save head address*/
 second = (*stack)->next; /*get 2nd node address*/
 if ((*stack)->n == 0)
 {
 fprintf(stderr, "L%d: division by zero\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 second->n = second->n / (*stack)->n;
 (*stack) = second;
@@ -125,7 +135,9 @@ stack_t *second, *tmp;
 if (!(*stack) || !(*stack)->next)
 {
 fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
-clean_exit();
+free_list();
+/*free(line);*/
+exit(EXIT_FAILURE);
 }
 tmp = (*stack); /* save head address*/
 second = (*stack)->next; /*get 2nd node address*/

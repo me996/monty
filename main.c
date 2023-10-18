@@ -1,8 +1,5 @@
 #include "monty.h"
-/*stack_t *head = NULL;*/
-
-glob glb = {NULL, NULL, NULL};
-
+stack_t *head = NULL;
 
 /**
  * main - entry point
@@ -20,7 +17,6 @@ exit(EXIT_FAILURE);
 }
 
 f = fopen(argv[1], "r"); /*pass in: file path, read only*/
-glb.f = f;
 if (!f)
 {/*if wrong with path or file*/
 fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
@@ -47,7 +43,6 @@ size_t line_len = 0;
 /*read every single line from file f*/
 while (getline(&line, &line_len, f) > -1)
 { /* refine the line*/
-glb.line = line;
 line_number++;
 opcode_extractor(line, line_number, &isStake);
 }
@@ -72,7 +67,9 @@ opcode = strtok(line, "\n ");
 if (!opcode) /* for empty line*/
 { /*check message: L<line_number>: unknown instruction <opcode> */
 fprintf(stderr, "Error: malloc failed\n");
-clean_exit();
+free_list();
+free(line);
+exit(EXIT_FAILURE);
 }
 
 if (strcmp(opcode, "nop") == 0 || opcode[0] == '#')
@@ -91,12 +88,12 @@ return;
 if (strcmp(opcode, "push") == 0)
 {/* only push has an argument*/
 push_arg = strtok(NULL, "\n ");
-handle_push(push_arg, line_number, isStake);
+handle_push(push_arg, line_number, line, isStake);
 return;
 }
 else
 {
-func_executor(opcode, line_number);
+func_executor(opcode, line_number, line);
 return;
 }
 
@@ -111,14 +108,14 @@ return;
  */
 
 
-void handle_push(char *push_arg, unsigned int line_number, int *isStake)
+void handle_push(char *push_arg, unsigned int line_number, char *line, int *isStake)
 {
 
 int n;
 stack_t *new_node;
 
-n = push_arg_number(push_arg, line_number);
-new_node = pre_push_node(n);
+n = push_arg_number(push_arg, line_number, line);
+new_node = pre_push_node(n, line);
 
 
 if (*isStake)
@@ -141,14 +138,16 @@ return;
  * Return: number
  */
 
-int push_arg_number(char *push_arg, unsigned int line_number)
+int push_arg_number(char *push_arg, unsigned int line_number, char *line)
 {
 int i, n, number_sign = 1;
 
 if (!push_arg)
 {
 fprintf(stderr, "L%d: usage: push integer\n", line_number);
-clean_exit();
+free_list();
+free(line);
+exit(EXIT_FAILURE);
 }
 
 /*transform string to integer:*/
@@ -164,7 +163,9 @@ for (i = 0; push_arg[i] != '\0'; i++)
 if (isdigit(push_arg[i]) == 0)
 {
 fprintf(stderr, "L%d: usage: push integer\n", line_number);
-clean_exit();
+free_list();
+free(line);
+exit(EXIT_FAILURE);
 }
 }
 n = number_sign *atoi(push_arg);
